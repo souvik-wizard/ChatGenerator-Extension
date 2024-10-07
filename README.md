@@ -1,3 +1,4 @@
-# WXT + React
-
-This template should help get you started developing with React in WXT.
+#Installation
+ npm i 
+# Start the server 
+npm run dev
