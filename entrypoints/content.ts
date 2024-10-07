@@ -70,7 +70,6 @@ export default defineContentScript({
       if (icon) icon.remove();
     }
 
-    // Function to open the modal (first slide)
     function openModal() {
       const modal = document.createElement('div');
       modal.id = 'response-generator-modal';
@@ -86,7 +85,7 @@ export default defineContentScript({
         align-items: center;
         z-index: 1000;
       `;
-
+    
       const modalContent = document.createElement('div');
       modalContent.id = 'modal-content';
       modalContent.style.cssText = `
@@ -99,8 +98,8 @@ export default defineContentScript({
         display: flex;
         flex-direction: column;
       `;
-
-      // Input field for prompt
+    
+      // First slide (input area and button)
       const inputField = document.createElement('input');
       inputField.type = 'text';
       inputField.placeholder = 'Your prompt';
@@ -112,27 +111,55 @@ export default defineContentScript({
         border-radius: 4px;
         outline: none;
         box-shadow: none !important;
-        color:#666D80;
+        color: #666D80;
       `;
-
-      // Generate button for given prompt
-      const generateButton = createButton('Generate', 'https://i.imgur.com/3df3yzf.png');
-
+    // Warning message for empty input
+      const warningMessage = document.createElement('div');
+      warningMessage.innerText = 'Prompt cannot be empty!';
+      warningMessage.style.cssText = `
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none; /* Initially hidden */
+      `;
+    
+      const generateButton = document.createElement('button');
+      generateButton.innerText = 'Generate';
+      generateButton.style.cssText = `
+        padding: 10px 15px;
+        background-color: #3B82F6;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        align-self: flex-end;
+      `;
+    
       generateButton.addEventListener('click', () => {
-        userPrompt = inputField.value;
-        if (userPrompt) showSecondSlide(modalContent);
+        // Trim whitespace (edge case)
+        userPrompt = inputField.value.trim(); 
+        // Check if the trimmed input is empty
+        if (!userPrompt) {
+          warningMessage.style.display = 'block'; 
+          return; 
+        } else {
+          warningMessage.style.display = 'none'; 
+        }
+    
+        showSecondSlide(modalContent);
       });
-
+    
       modalContent.appendChild(inputField);
+      modalContent.appendChild(warningMessage); 
       modalContent.appendChild(generateButton);
       modal.appendChild(modalContent);
-
+      document.body.appendChild(modal);
+    
       modal.addEventListener('click', (e) => {
         if (e.target === modal) hideModal();
       });
-
-      document.body.appendChild(modal);
     }
+    
 
     // Function to create a button with text and icon
     function createButton(text: string, iconUrl: string) {
