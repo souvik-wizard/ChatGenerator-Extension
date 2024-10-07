@@ -189,8 +189,8 @@ export default defineContentScript({
       const promptDisplay = document.createElement('div');
       promptDisplay.innerText = `${userPrompt}`;
       promptDisplay.style.cssText = `
-        text-align: right;
-        width: 80%;
+        text-align: left;
+        min-width: 20%;
         background-color: #DFE1E7;
         margin-bottom: 10px;
         color: #666D80;
