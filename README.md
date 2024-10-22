@@ -1,5 +1,5 @@
 # Installation
- NODE VERSION SHOULD BE =< 18
+ NODE VERSION SHOULD BE >= 18
  <br>
  ```bash
  npm i
