@@ -1,8 +1,9 @@
 # Installation
+NODE VERSION SHOULD BE < 18
  npm i 
 # Start the server 
 npm run dev
-#Add your API key
+# Add your API key
 ```bash
 /entrypoints/content.ts
 
