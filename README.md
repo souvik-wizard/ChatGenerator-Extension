@@ -2,6 +2,13 @@
  npm i 
 # Start the server 
 npm run dev
+#Add your API key
+```bash
+/entrypoints/content.ts
+
+const apiKey = "ENTER YOUR API KEY HERE";
+```
+
 # Demo 
 
 
