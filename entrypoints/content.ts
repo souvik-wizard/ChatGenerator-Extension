@@ -6,7 +6,7 @@ export default defineContentScript({
     let userPrompt = ''; 
     let regeneratePrompt = '';
     let responseText = '';
-
+    const htmlElem =  document.getElementsByTagName('html')[0];
     document.addEventListener('focusin', (e) => {
       const messageInput = document.querySelector('.msg-form__contenteditable');
       const inputParent = messageInput?.parentElement?.parentElement;
@@ -150,6 +150,20 @@ export default defineContentScript({
         box-shadow: none !important;
         color: #666D80;
       `;
+
+      const style = document.createElement('style');
+      document.head.appendChild(style);
+
+      function setPlaceholderColor(condition: boolean) {
+        const placeholderColor = condition ? '#666D80' : '#666D80';
+        style.innerHTML = `
+          input::placeholder {
+            color: ${placeholderColor} !important;
+          }
+        `;
+      } 
+      const someCondition = htmlElem.className.includes('theme--dark'); 
+      setPlaceholderColor(someCondition);
 
       const warningMessage = document.createElement('div');
       warningMessage.innerText = 'Please enter something!';
