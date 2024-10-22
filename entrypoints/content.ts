@@ -108,6 +108,43 @@ export default defineContentScript({
       if (icon) icon.remove();
     }
 
+    function createButton(text: string, iconUrl: string) {
+      const buttonContainer = document.createElement('div');
+      buttonContainer.style.cssText = `
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 5px;
+        cursor: pointer;
+      `;
+
+      const button = document.createElement('button');
+      button.style.cssText = `
+        padding: 10px 15px;
+        background-color: #3B82F6;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      `;
+
+      const img = document.createElement('img');
+      img.src = iconUrl;
+      img.alt = `${text} Icon`;
+      img.style.cssText = `
+        width: 12px;
+      `;
+
+      button.appendChild(img);
+      button.appendChild(document.createTextNode(text));
+      buttonContainer.appendChild(button);
+
+      return buttonContainer;
+    }
+    
     function openModal() {
       const modal = document.createElement('div');
       modal.id = 'response-generator-modal';
@@ -174,22 +211,11 @@ export default defineContentScript({
         display: none;
       `;
 
-      const generateButton = document.createElement('button');
-      generateButton.innerText = 'Generate';
-      generateButton.style.cssText = `
-        padding: 10px 15px;
-        background-color: #3B82F6;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        align-self: flex-end;
-      `;
-
+      const generateButton = createButton('Generate', "https://i.imgur.com/px7bqu7.png");
       generateButton.addEventListener('click', () => {
         userPrompt = inputField.value.trim();
         const generateResponseContent =  `Generate a response as per this prompt "${userPrompt}" for Linkedin. And most important, whatever the prompt is try to find familiarity with Linkedin context and respond accordingly also do not add any special characters because I'm going to copy and paste the response.`;
-        console.log(userPrompt, 'userPrompt from generate button');
+        // console.log(userPrompt, 'userPrompt from generate button');
         if (!userPrompt) {
           warningMessage.style.display = 'block'; 
           return;
@@ -211,43 +237,6 @@ export default defineContentScript({
       modal.addEventListener('click', (e) => {
         if (e.target === modal) hideModal();
       });
-    }
-
-    function createButton(text: string, iconUrl: string) {
-      const buttonContainer = document.createElement('div');
-      buttonContainer.style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 5px;
-        cursor: pointer;
-      `;
-
-      const button = document.createElement('button');
-      button.style.cssText = `
-        padding: 10px 15px;
-        background-color: #3B82F6;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      `;
-
-      const img = document.createElement('img');
-      img.src = iconUrl;
-      img.alt = `${text} Icon`;
-      img.style.cssText = `
-        width: 12px;
-      `;
-
-      button.appendChild(img);
-      button.appendChild(document.createTextNode(text));
-      buttonContainer.appendChild(button);
-
-      return buttonContainer;
     }
 
     function showSecondSlide(modalContent: HTMLElement) {
@@ -331,9 +320,9 @@ export default defineContentScript({
       const regenerateButton = createButton('Regenerate', 'https://i.imgur.com/tPTpN8Y.png');
       regenerateButton.addEventListener('click', () => {
         regeneratePrompt = secondInputField.value.trim();
-        console.log(regeneratePrompt, 'from regenerate button');
+        // console.log(regeneratePrompt, 'from regenerate button');
         const regenerateResponseContent = `Give me a better response(1 response only) then this for Linkedin: " ${responseText}" and also consider this "${regeneratePrompt}" while generating the response. Also do not add any special characters because I'm gonna copy and paste the response.`;
-        console.log(regenerateResponseContent);
+        // console.log(regenerateResponseContent);
         if (!regeneratePrompt){
           warningMessage.style.display = 'block';
           return;
