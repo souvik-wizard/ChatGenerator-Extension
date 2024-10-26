@@ -8,7 +8,7 @@
 ```bash
 npm run dev
 ```
-# Add your API key
+# Add your API key (Gemini API by Google)
 ```bash
 /entrypoints/content.ts
 
