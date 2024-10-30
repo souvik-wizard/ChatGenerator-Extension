@@ -28,7 +28,7 @@ npm run dev
 ```
 # Build command to generate the file for Chrome
 
--Open another terminal
+- Open another terminal then type
 
 ```bash
 npm run build
