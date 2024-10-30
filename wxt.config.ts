@@ -4,9 +4,9 @@ export default defineConfig({
   modules: ['@wxt-dev/module-react'],
   manifest: {
     "manifest_version": 3,
-    "name": "Chat Generator",
-    "version": "1.0.0",
-    "description": "Auto generate chat messages based on the user's input",
+    "name": "LinkedEase",
+    "version": "1.0",
+    "description": "This Chrome extension auto-generates chats for your LinkedIn messages based on user input.",
     "permissions": ["tabs", "storage", "activeTab", "scripting"],
     "web_accessible_resources": [
       {

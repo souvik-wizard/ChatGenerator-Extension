@@ -22,6 +22,7 @@ export default defineContentScript({
     });
 
     const fetchResponse = async (prompt: string): Promise<string> => {
+      // Enter your API key here
       const apiKey = "ENTER YOUR API KEY HERE";
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
     
